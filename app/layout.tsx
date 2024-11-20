@@ -1,14 +1,15 @@
+// 'use client' di sini memastikan ini adalah Client Component
+'use client'
+
 import "@mantine/core/styles.css";
 import React from "react";
 import { MantineProvider, ColorSchemeScript } from "@mantine/core";
 import { theme } from "../theme";
+import { Navbar } from "./components";
+import '../public/styles/global.css';
+import { SessionProvider } from "next-auth/react";
 
-export const metadata = {
-  title: "Mantine Next.js template",
-  description: "I am using Mantine with Next.js!",
-};
-
-export default function RootLayout({ children }: { children: any }) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -20,7 +21,11 @@ export default function RootLayout({ children }: { children: any }) {
         />
       </head>
       <body>
-        <MantineProvider theme={theme}>{children}</MantineProvider>
+        <SessionProvider>
+          <MantineProvider theme={theme}>
+            <Navbar>{children}</Navbar>
+          </MantineProvider>
+        </SessionProvider>
       </body>
     </html>
   );
